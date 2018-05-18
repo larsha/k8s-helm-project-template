@@ -33,3 +33,21 @@ spec:
         imagePullPolicy: {{ .Values.nginx.image.pullPolicy }}
         ports:
         - containerPort: {{ .Values.nginx.service.port }}
+        lifecycle:
+          preStop:
+            exec:
+              command: ["sleep", "30"]
+        readinessProbe:
+          httpGet:
+            path: /__ready
+            port: 80
+          periodSeconds: 1
+          successThreshold: 1
+          failureThreshold: 1
+        livenessProbe:
+          httpGet:
+            path: /__ready
+            port: 80
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 1
