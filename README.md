@@ -3,7 +3,7 @@
 This repo aims to provide a starting point for creating a project utilizing Kubernetes with multiple environments including local/development.
 Comes packed with an simple example PHP app.
 
-### Prerequisites`
+### Prerequisites
 
 - Kubernetes (Docker for Mac (edge) / minikube)
 - `helm` [https://helm.sh/](https://helm.sh/)
