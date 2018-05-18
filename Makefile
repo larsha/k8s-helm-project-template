@@ -5,6 +5,7 @@ INSECURE_LOCAL_REGISTRY=docker.for.mac.localhost:5000
 setup_development:
 	kubectl create ns egm
 	kubens egm
+	helm del --purge docker-registry
 	helm init --upgrade --service-account default
 	helm install stable/docker-registry \
 		--namespace default \
@@ -13,7 +14,7 @@ setup_development:
 		--set persistence.enabled=true
 
 .PHONY: deploy_development
-deploy_development:
+push_development:
 	kubectx docker-for-desktop
 	kubens egm
 
@@ -30,6 +31,10 @@ deploy_development:
 		-f src/web/Dockerfile src/web
 
 	docker push $(INSECURE_LOCAL_REGISTRY)/egm/web-deployment:latest
+
+.PHONY: install_development
+install_development:
+	helm install ./chart
 
 .PHONY: update_helm_repo
 update_helm_repo:
