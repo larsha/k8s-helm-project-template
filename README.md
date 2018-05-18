@@ -1,6 +1,7 @@
 # k8s-helm-project-template
 
 This repo aims to provide a starting point for creating a project utilizing Kubernetes with multiple environments including local/development.
+Comes packed with an simple example PHP app.
 
 ### Prerequisites
 
