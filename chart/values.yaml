@@ -20,13 +20,13 @@ web:
     tag: latest
     pullPolicy: IfNotPresent
 
-  service:
-    type: LoadBalancer
-    port: 9000
-    protocol: TCP
-
   volumeMounts:
     mountPath: /var/www/html
   volumes:
     hostPath:
       path: /Users/fredrik/dev/git/k8s-helm-project-template/src/web
+
+  service:
+    type: LoadBalancer
+    port: 9000
+    protocol: TCP
