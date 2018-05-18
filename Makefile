@@ -12,8 +12,8 @@ setup_development:
 		--set service.type=LoadBalancer \
 		--set persistence.enabled=true
 
-.PHONY: deploy_php_development
-deploy_php_development:
+.PHONY: deploy_development
+deploy_development:
 	kubectx docker-for-desktop
 	kubens egm-development
 

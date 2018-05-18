@@ -1,7 +1,0 @@
-kind: ConfigMap
-apiVersion: v1
-metadata:
-  name: asda-configmap
-  namespace: egm-development
-data:
-  PORT: "3000"
