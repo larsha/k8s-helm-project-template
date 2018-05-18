@@ -1,17 +1,19 @@
 # Make sure this insecure registry is added to local Docker daemon
 INSECURE_LOCAL_REGISTRY=docker.for.mac.localhost:5000
 
-.PHONY: setup_development
-setup_development:
-	kubectl create ns egm
-	kubens egm
-	helm del --purge docker-registry
-	helm init --upgrade --service-account default
+.PHONY: setup_development_registry
+setup_development_registry:
 	helm install stable/docker-registry \
 		--namespace default \
 		--name docker-registry \
 		--set service.type=LoadBalancer \
 		--set persistence.enabled=true
+
+.PHONY: setup_development
+setup_development:
+	kubectl create ns egm
+	kubens egm
+	helm init --upgrade --service-account default
 
 .PHONY: push_development
 push_development:
