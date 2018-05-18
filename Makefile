@@ -1,3 +1,4 @@
+# Make sure this insecure registry is added to local Docker daemon
 INSECURE_LOCAL_REGISTRY=docker.for.mac.localhost:5000
 
 .PHONY: setup_development

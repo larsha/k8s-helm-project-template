@@ -24,7 +24,7 @@ web:
     mountPath: /var/www/html
   volumes:
     hostPath:
-      path: /Users/fredrik/dev/git/k8s-helm-project-template/src/web
+      path:
 
   service:
     type: LoadBalancer

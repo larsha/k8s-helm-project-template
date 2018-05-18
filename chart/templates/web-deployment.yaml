@@ -32,7 +32,7 @@ spec:
         imagePullPolicy: {{ .Values.web.image.pullPolicy }}
         ports:
         - containerPort: {{ .Values.web.service.port }}
-{{ if .Values.web.volumeMounts }}
+{{ if and .Values.web.volumeMounts .Values.web.volumes.hostPath.path }}
         volumeMounts:
             - mountPath: {{ .Values.web.volumeMounts.mountPath }}
               name: code
