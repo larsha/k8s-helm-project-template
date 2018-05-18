@@ -19,15 +19,15 @@ deploy_development:
 
 	# Nginx
 	docker build \
-      -t $(INSECURE_LOCAL_REGISTRY)/egm-development/nginx-deployment:latest \
-      -f src/nginx/Dockerfile src/nginx
+		-t $(INSECURE_LOCAL_REGISTRY)/egm-development/nginx-deployment:latest \
+		-f src/nginx/Dockerfile src/nginx
 
 	docker push $(INSECURE_LOCAL_REGISTRY)/egm-development/nginx-deployment:latest
 
 	# Web
 	docker build \
-	  -t $(INSECURE_LOCAL_REGISTRY)/egm-development/web-deployment:latest \
-	  -f src/web/Dockerfile src/web
+		-t $(INSECURE_LOCAL_REGISTRY)/egm-development/web-deployment:latest \
+		-f src/web/Dockerfile src/web
 
 	docker push $(INSECURE_LOCAL_REGISTRY)/egm-development/web-deployment:latest
 
