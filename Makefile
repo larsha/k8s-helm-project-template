@@ -15,8 +15,8 @@ setup_development:
 	kubens egm
 	helm init --upgrade --service-account default
 
-.PHONY: build_development
-build_development:
+.PHONY: build_development_nginx
+build_development_nginx:
 	kubectx docker-for-desktop
 	kubens egm
 
@@ -27,6 +27,11 @@ build_development:
 		-f src/nginx/Dockerfile src/nginx
 
 	docker push $(INSECURE_LOCAL_REGISTRY)/egm/nginx-deployment:latest
+
+.PHONY: build_development_web
+build_development_web:
+	kubectx docker-for-desktop
+	kubens egm
 
 	# Web
 	docker build \
