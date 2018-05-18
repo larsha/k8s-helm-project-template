@@ -3,8 +3,8 @@ INSECURE_LOCAL_REGISTRY=docker.for.mac.localhost:5000
 
 .PHONY: setup_development
 setup_development:
-	kubectl create ns egm-development
-	kubens egm-development
+	kubectl create ns egm
+	kubens egm
 	helm init --upgrade --service-account default
 	helm install stable/docker-registry \
 		--namespace default \
@@ -15,21 +15,21 @@ setup_development:
 .PHONY: deploy_development
 deploy_development:
 	kubectx docker-for-desktop
-	kubens egm-development
+	kubens egm
 
 	# Nginx
 	docker build \
-		-t $(INSECURE_LOCAL_REGISTRY)/egm-development/nginx-deployment:latest \
+		-t $(INSECURE_LOCAL_REGISTRY)/egm/nginx-deployment:latest \
 		-f src/nginx/Dockerfile src/nginx
 
-	docker push $(INSECURE_LOCAL_REGISTRY)/egm-development/nginx-deployment:latest
+	docker push $(INSECURE_LOCAL_REGISTRY)/egm/nginx-deployment:latest
 
 	# Web
 	docker build \
-		-t $(INSECURE_LOCAL_REGISTRY)/egm-development/web-deployment:latest \
+		-t $(INSECURE_LOCAL_REGISTRY)/egm/web-deployment:latest \
 		-f src/web/Dockerfile src/web
 
-	docker push $(INSECURE_LOCAL_REGISTRY)/egm-development/web-deployment:latest
+	docker push $(INSECURE_LOCAL_REGISTRY)/egm/web-deployment:latest
 
 .PHONY: update_helm_repo
 update_helm_repo:
