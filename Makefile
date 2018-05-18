@@ -13,7 +13,7 @@ setup_development:
 		--set service.type=LoadBalancer \
 		--set persistence.enabled=true
 
-.PHONY: deploy_development
+.PHONY: push_development
 push_development:
 	kubectx docker-for-desktop
 	kubens egm
