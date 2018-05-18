@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: php-nginx-service
+  namespace: egm-development
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 6060
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: php-nginx-deployment

@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: php-web-deployment
+  namespace: egm-development
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: php-web-deployment
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - php-web-deployment
+              topologyKey: kubernetes.io/hostname
+      containers:
+      - name: php-web
+        image: docker.for.mac.localhost:5000/egm-development/php-web-deployment:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9000

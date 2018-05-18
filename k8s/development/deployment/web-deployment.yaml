@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: web-deployment
+  namespace: egm-development
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: web-deployment
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - web-deployment
+              topologyKey: kubernetes.io/hostname
+      containers:
+      - name: web
+        image: docker.for.mac.localhost:5000/egm-development/web-deployment:latest
+        imagePullPolicy: Always
+        envFrom:
+        - configMapRef:
+            name: web-configmap
+        ports:
+        - containerPort: 3000
