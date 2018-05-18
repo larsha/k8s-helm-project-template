@@ -5,7 +5,11 @@ setup_development:
 	kubectl create ns egm-development
 	kubens egm-development
 	helm init --upgrade --service-account default
-	helm install stable/docker-registry --name docker-registry --set service.type=LoadBalancer
+	helm install stable/docker-registry \
+		--namespace default \
+		--name docker-registry \
+		--set service.type=LoadBalancer \
+		--set persistence.enabled=true
 
 .PHONY: deploy_php_development
 deploy_php_development:
