@@ -1,10 +1,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: asda-asda-deployment
-  namespace: egm-development
+  name: web-deployment
 spec:
-  replicas: 1
+  replicas: {{ .Values.web.replicas }}
   strategy:
     rollingUpdate:
       maxSurge: 50%
@@ -13,7 +12,7 @@ spec:
   template:
     metadata:
       labels:
-        app: asda-asda-deployment
+        app: web-deployment
     spec:
       affinity:
         podAntiAffinity:
@@ -25,18 +24,20 @@ spec:
                 - key: app
                   operator: In
                   values:
-                  - asda-asda-deployment
+                  - web-deployment
               topologyKey: kubernetes.io/hostname
       containers:
-      - name: asda-asda
-        image: docker.for.mac.localhost:5000/egm-development/asda-asda-deployment:latest
-        imagePullPolicy: Always
+      - name: web
+        image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
+        imagePullPolicy: {{ .Values.web.image.pullPolicy }}
         ports:
-        - containerPort: 9000
+        - containerPort: {{ .Values.web.service.port }}
+{{ if .Values.web.volumeMounts }}
         volumeMounts:
-            - mountPath: /var/www/html
+            - mountPath: {{ .Values.web.volumeMounts.mountPath }}
               name: code
       volumes:
         - name: code
           hostPath:
-            path: /Users/fredrik/dev/git/k8s-helm-project-template/src/asda/asda
+            path: {{ .Values.web.volumes.hostPath.path }}
+{{ end }}

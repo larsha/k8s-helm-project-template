@@ -1,9 +1,3 @@
-FROM node:10.1.0
+FROM php:7-fpm
 
-COPY . /home/node/web/
-WORKDIR /home/node/web
-RUN chown node --recursive .
-
-USER node
-
-CMD ["node", "app.js"]
+COPY index.php /var/www/html

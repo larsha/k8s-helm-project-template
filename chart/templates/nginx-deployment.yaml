@@ -1,10 +1,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: asda-asda-deployment
-  namespace: egm-development
+  name: nginx-deployment
 spec:
-  replicas: 1
+  replicas: {{ .Values.nginx.replicas }}
   strategy:
     rollingUpdate:
       maxSurge: 50%
@@ -13,7 +12,7 @@ spec:
   template:
     metadata:
       labels:
-        app: asda-asda-deployment
+        app: nginx-deployment
     spec:
       affinity:
         podAntiAffinity:
@@ -25,18 +24,12 @@ spec:
                 - key: app
                   operator: In
                   values:
-                  - asda-asda-deployment
+                  - nginx-deployment
               topologyKey: kubernetes.io/hostname
+      terminationGracePeriodSeconds: 60
       containers:
-      - name: asda-asda
-        image: docker.for.mac.localhost:5000/egm-development/asda-asda-deployment:latest
-        imagePullPolicy: Always
+      - name: nginx
+        image: "{{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag }}"
+        imagePullPolicy: {{ .Values.nginx.image.pullPolicy }}
         ports:
-        - containerPort: 9000
-        volumeMounts:
-            - mountPath: /var/www/html
-              name: code
-      volumes:
-        - name: code
-          hostPath:
-            path: /Users/fredrik/dev/git/k8s-helm-project-template/src/asda/asda
+        - containerPort: {{ .Values.nginx.service.port }}

@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: php-web-service
+  name: asda-asda-service
   namespace: egm-development
 spec:
   ports:
   - port: 9000
     protocol: TCP
   selector:
-    app: php-web-deployment
+    app: asda-asda-deployment

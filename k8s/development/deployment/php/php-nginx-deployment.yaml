@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: php-nginx-deployment
+  name: nginx-deployment
   namespace: egm-development
 spec:
   replicas: 1
@@ -13,7 +13,7 @@ spec:
   template:
     metadata:
       labels:
-        app: php-nginx-deployment
+        app: nginx-deployment
     spec:
       affinity:
         podAntiAffinity:
@@ -25,12 +25,12 @@ spec:
                 - key: app
                   operator: In
                   values:
-                  - php-nginx-deployment
+                  - nginx-deployment
               topologyKey: kubernetes.io/hostname
       terminationGracePeriodSeconds: 60
       containers:
-      - name: php-nginx
-        image: docker.for.mac.localhost:5000/egm-development/php-nginx-deployment:latest
+      - name: nginx
+        image: docker.for.mac.localhost:5000/egm-development/asda-nginx-deployment:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80

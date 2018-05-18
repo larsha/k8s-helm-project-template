@@ -1,0 +1,32 @@
+nginx:
+  replicaCount: 1
+
+  image:
+    repository: docker.for.mac.localhost:5000/egm-development/nginx-deployment
+    tag: latest
+    pullPolicy: IfNotPresent
+
+  service:
+    type: LoadBalancer
+    port: 6060
+    targetPort: 80
+    protocol: TCP
+
+web:
+  replicaCount: 1
+
+  image:
+    repository: docker.for.mac.localhost:5000/egm-development/web-deployment
+    tag: latest
+    pullPolicy: IfNotPresent
+
+  service:
+    type: LoadBalancer
+    port: 9000
+    protocol: TCP
+
+  volumeMounts:
+    mountPath: /var/www/html
+  volumes:
+    hostPath:
+      path: /Users/fredrik/dev/git/k8s-helm-project-template/src/web
