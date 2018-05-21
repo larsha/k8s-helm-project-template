@@ -13,8 +13,6 @@ setup_development_registry:
 .PHONY: setup_development
 setup_development:
 	kubectl config use-context docker-for-desktop
-	kubectl create ns egm
-	kubectl config set-context docker-for-desktop --namespace=egm
 	helm init --upgrade --service-account default
 
 .PHONY: build_development_nginx
@@ -37,8 +35,13 @@ build_development_web:
 .PHONY: install_development
 install_development:
 	kubectl config use-context docker-for-desktop
+	kubectl create ns egm
 	kubectl config set-context docker-for-desktop --namespace=egm
 	helm install --name egm ./chart
+
+.PHONY: upgrade_development
+upgrade_development:
+	helm upgrade egm ./chart
 
 .PHONY: update_helm_repo
 update_helm_repo:
