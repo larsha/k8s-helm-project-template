@@ -38,7 +38,7 @@ build_development_web:
 install_development:
 	kubectl config use-context docker-for-desktop
 	kubectl config set-context docker-for-desktop --namespace=egm
-	helm install ./chart
+	helm install --name egm ./chart
 
 .PHONY: update_helm_repo
 update_helm_repo:
