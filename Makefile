@@ -3,6 +3,7 @@ INSECURE_LOCAL_REGISTRY=docker.for.mac.localhost:5000
 
 .PHONY: setup_development_registry
 setup_development_registry:
+	kubectl config use-context docker-for-desktop
 	helm install stable/docker-registry \
 		--namespace default \
 		--name docker-registry \
@@ -11,16 +12,13 @@ setup_development_registry:
 
 .PHONY: setup_development
 setup_development:
+	kubectl config use-context docker-for-desktop
 	kubectl create ns egm
-	kubens egm
+	kubectl config set-context docker-for-desktop --namespace=egm
 	helm init --upgrade --service-account default
 
 .PHONY: build_development_nginx
 build_development_nginx:
-	kubectx docker-for-desktop
-	kubens egm
-
-	# Nginx
 	docker build \
 		--build-arg CONF=development.conf \
 		-t $(INSECURE_LOCAL_REGISTRY)/egm/nginx-deployment:latest \
@@ -30,10 +28,6 @@ build_development_nginx:
 
 .PHONY: build_development_web
 build_development_web:
-	kubectx docker-for-desktop
-	kubens egm
-
-	# Web
 	docker build \
 		-t $(INSECURE_LOCAL_REGISTRY)/egm/web-deployment:latest \
 		-f src/web/Dockerfile src/web
@@ -42,6 +36,8 @@ build_development_web:
 
 .PHONY: install_development
 install_development:
+	kubectl config use-context docker-for-desktop
+	kubectl config set-context docker-for-desktop --namespace=egm
 	helm install ./chart
 
 .PHONY: update_helm_repo
@@ -50,4 +46,10 @@ update_helm_repo:
 
 .PHONY: install_dry_run
 install_dry_run:
-	helm install --dry-run --debug ./chart
+	kubectl config use-context docker-for-desktop
+	helm install --name egm --dry-run --debug ./chart
+
+.PHONY: delete_development
+delete_development:
+	helm delete egm --purge
+	kubectl delete ns egm

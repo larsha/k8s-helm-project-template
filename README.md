@@ -8,7 +8,6 @@ Comes packed with an simple example PHP app.
 - Kubernetes (Docker for Mac (edge) / minikube)
 - `helm` [https://helm.sh/](https://helm.sh/)
 - `kubectl` [https://kubernetes.io/docs/tasks/tools/install-kubectl/](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-- `kubectx` [https://github.com/ahmetb/kubectx](https://github.com/ahmetb/kubectx)
 
 ### Guides / Useful links
 
