@@ -2,7 +2,7 @@ nginx:
   replicaCount: 1
 
   image:
-    repository: docker.for.mac.localhost:5000/egm/nginx-deployment
+    repository: docker.for.mac.localhost:5000/template/nginx-deployment
     tag: latest
     pullPolicy: IfNotPresent
 
@@ -16,7 +16,7 @@ web:
   replicaCount: 1
 
   image:
-    repository: docker.for.mac.localhost:5000/egm/web-deployment
+    repository: docker.for.mac.localhost:5000/template/web-deployment
     tag: latest
     pullPolicy: IfNotPresent
 
